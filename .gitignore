@@ -13,5 +13,9 @@ venv/
 .idea/
 .vscode/
 
+# Reports directory
+/reports/
+*.pdf
+
 # System files
 .DS_Store
