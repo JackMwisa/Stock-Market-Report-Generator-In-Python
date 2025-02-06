@@ -1,8 +1,9 @@
-import os
 import yfinance as yf
 from datetime import datetime, timedelta
 from fpdf import FPDF
+import os
 
+# Report Directory
 REPORTS_DIR = "reports"
 
 def fetch_stock_data(ticker, days=10):
@@ -97,3 +98,4 @@ def process_stock_report():
     
     print("⚠️ No data available for the selected tickers.")
     return None
+
