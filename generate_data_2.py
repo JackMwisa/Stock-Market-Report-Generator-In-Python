@@ -58,7 +58,7 @@ def generate_pdf(data_dict):
 
     # Save PDF with timestamp
     timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-    filename = f"Stock_Report_{timestamp}.pdf"
+    filename = f"reports/Stock_Report_{timestamp}.pdf"
     pdf.output(filename)
     print(f"PDF report saved as {filename}")
     return filename
