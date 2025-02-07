@@ -21,6 +21,9 @@ def fetch_stock_data(ticker, days):
 
     return data[['Open', 'Close', 'High', 'Low', 'Volume']]
 
+
+# generate pdf 
+
 def generate_pdf(data_dict):
     """Generate a PDF report for multiple stocks."""
     os.makedirs("reports", exist_ok=True)
@@ -67,6 +70,10 @@ def generate_pdf(data_dict):
     print(f"PDF report saved as {filename}")
     return filename
 
+
+
+#send email function
+
 def send_email(pdf_filename):
     """Send the PDF report via Gmail."""
     msg = MIMEMultipart()
@@ -94,6 +101,7 @@ def send_email(pdf_filename):
         print("✅ Email sent successfully!")
     except Exception as e:
         print(f"❌ Error sending email: {e}")
+        
 
 
 if __name__ == "__main__":
