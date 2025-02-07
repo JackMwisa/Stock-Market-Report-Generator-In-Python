@@ -1,0 +1,6 @@
+fpdf
+yfinance
+python-dotenv
+smtplib
+
+
