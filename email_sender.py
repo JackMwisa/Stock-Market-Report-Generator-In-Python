@@ -1,38 +1,37 @@
 import os
 import smtplib
-from email.message import EmailMessage
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.application import MIMEApplication
 from dotenv import load_dotenv
 
-# Load environment variables
+# Load environment variables from .env file
 load_dotenv()
 
-EMAIL_SENDER = os.getenv("EMAIL_USER")
-EMAIL_PASSWORD = os.getenv("EMAIL_PASS")
-EMAIL_RECEIVER = os.getenv("EMAIL_RECEIVER")
+def send_email(pdf_filename):
+    """Send the PDF report via Gmail."""
+    msg = MIMEMultipart()
+    msg['From'] = os.getenv("GMAIL_EMAIL")
+    msg['To'] = os.getenv("GMAIL_EMAIL")  # Send to yourself or another recipient
+    msg['Subject'] = "Daily Stock Market Report"
 
-def send_email(filename):
-    """Send the generated PDF report via email."""
-    if not os.path.exists(filename):
-        print("❌ Error: Report file does not exist.")
-        return
+    # Email body
+    body = "Attached is the latest stock market report."
+    msg.attach(MIMEText(body, 'plain'))
 
-    msg = EmailMessage()
-    msg["Subject"] = "📊 Weekly Automated Stock Report"
-    msg["From"] = EMAIL_SENDER
-    msg["To"] = EMAIL_RECEIVER
-    msg.set_content("Attached is the latest stock market report.")
+    # Attach PDF
+    with open(pdf_filename, "rb") as f:
+        attach = MIMEApplication(f.read(), _subtype="pdf")
+        attach.add_header('Content-Disposition', 'attachment', filename=os.path.basename(pdf_filename))
+        msg.attach(attach)
 
+    # Gmail SMTP configuration
     try:
-        # Attach the PDF file
-        with open(filename, "rb") as f:
-            file_data = f.read()
-            msg.add_attachment(file_data, maintype="application", subtype="pdf", filename=os.path.basename(filename))
-
-        # Send email
-        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
-            server.login(EMAIL_SENDER, EMAIL_PASSWORD)
-            server.send_message(msg)
-
+        server = smtplib.SMTP("smtp.gmail.com", 587)
+        server.starttls()
+        server.login(os.getenv("GMAIL_EMAIL"), os.getenv("GMAIL_PASSWORD"))  
+        server.sendmail(msg['From'], msg['To'], msg.as_string())
+        server.quit()
         print("✅ Email sent successfully!")
     except Exception as e:
-        print(f"❌ Failed to send email: {e}")
+        print(f"❌ Error sending email: {e}")
