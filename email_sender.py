@@ -17,7 +17,7 @@ def send_email(filename):
         return
 
     msg = EmailMessage()
-    msg["Subject"] = "📊 Automated Stock Report"
+    msg["Subject"] = "📊 Weekly Automated Stock Report"
     msg["From"] = EMAIL_SENDER
     msg["To"] = EMAIL_RECEIVER
     msg.set_content("Attached is the latest stock market report.")

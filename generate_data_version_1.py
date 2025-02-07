@@ -64,7 +64,7 @@ def generate_pdf(data_dict):
     return filename
 
 if __name__ == "__main__":
-    tickers = ["AAPL", "GOOGL", "MSFT"]  # Add more ticker symbols if needed
+    tickers = ["GOOGL", "AAPL", "MSFT", "AMZN", "FMC", "TSLA"]  
     days = 10
     data_dict = {}
 

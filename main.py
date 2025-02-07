@@ -12,10 +12,10 @@ def job():
         print("⚠️ No report generated. Skipping email.")
 
 # Schedule the job to run every 7 days
-schedule.every(7).days.do(job)
+schedule.every(1).days.do(job)
 
-print("📅 Scheduler started. Running every 7 days.")
+print("📅 Scheduler started. Running every day.")
 
 while True:
     schedule.run_pending()
-    time.sleep(60)  # Check every minute
+    time.sleep(10)  # Check every minute
